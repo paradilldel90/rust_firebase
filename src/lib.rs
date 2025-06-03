@@ -21,4 +21,4 @@ pub use register::register;
 pub use register::Registration;
 
 #[cfg(feature = "ffi")]
-pub mod c_api;
+pub mod ffi;
