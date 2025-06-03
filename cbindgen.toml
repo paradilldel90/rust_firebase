@@ -1,0 +1,80 @@
+# cbindgen.toml
+language = "C++"
+cpp_compat = true
+namespace = "fcm"
+
+header = """
+#ifndef FCM_PUSH_LISTENER_H
+#define FCM_PUSH_LISTENER_H
+
+#include <cstdint>
+#include <cstdlib>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+"""
+
+trailer = """
+#ifdef __cplusplus
+} // extern "C"
+} // namespace fcm
+#endif
+
+#endif // FCM_PUSH_LISTENER_H
+"""
+
+[export]
+# Экспортировать только функции с префиксом fcm_ и no_mangle
+include = ["fcm_*"]
+prefix = ""
+item_types = ["functions", "structs", "enums", "constants", "typedefs"]
+
+[export.rename]
+# Не нужно переименовывать
+
+[parse]
+parse_deps = false
+include = ["fcm-push-listener"]
+
+[parse.expand]
+# Указываем какие crates раскрывать
+crates = ["fcm-push-listener"]
+# Включаем все features при генерации
+all_features = true
+# Или можно указать конкретные features
+# features = ["ffi"]
+
+[defines]
+# Определяем условную компиляцию для feature flags
+"feature = ffi" = "FFI_ENABLED"
+
+[macro_expansion]
+bitflags = false
+
+[layout]
+# Генерировать информацию о размерах структур
+generate_layout_tests = false
+
+[fn]
+# Настройки для функций
+rename_args = "None"
+
+[struct]
+# Настройки для структур
+derive_constructor = false
+derive_destructor = false
+
+[enum]
+# Настройки для enum
+rename_variants = "None"
+add_sentinel = false
+prefix_with_name = false
+derive_helper_methods = false
+derive_const_casts = false
+derive_mut_casts = false
+
+[const]
+# Настройки для констант
+allow_static_const = true
+allow_constexpr = true
