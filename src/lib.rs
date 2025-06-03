@@ -20,5 +20,6 @@ pub use push::MessageTag;
 pub use register::register;
 pub use register::Registration;
 
+// C API модуль включается только при feature ffi
 #[cfg(feature = "ffi")]
-pub mod ffi;
+pub mod c_api;
